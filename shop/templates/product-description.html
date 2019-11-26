@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="container product-container">
+
+    <div class="row">
+        <div class="col-md-5 product-image">
+            <img class="d-block w-100" src={{ url_for('static', filename='images/'+data[2]) }} id="productImage" />
+        </div>
+        <div class="col-md-7 product-info">
+            <p class="newarrival text-center">NEW</p>
+            <h2>{{data[1]}}</h2>
+            <b>Stock:</b> <input type="text" value={{data[6]}} disabled>
+            <p class="price">{{data[3]}} VND</p>
+            <p class="discount"><b>Discount:</b> {{data[4]}}%</p>
+            <button type="button" class="btn btn-default cart"><i class="fas fa-cart-plus"></i> Add To Cart</button>
+        </div>
+    </div>
+    <div class="product-title">DESCRIPTION</div>
+    <div class="product-des">
+        {{data[5]}}
+    </div>
+</div>
+
+
+{% endblock %}

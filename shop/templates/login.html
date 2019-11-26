@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/reset.css') }} />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" />
+    <link rel="stylesheet" href={{ url_for('static', filename='css/animate.css') }} />
+    <link rel="stylesheet" href={{ url_for('static', filename='css/bootstrap.min.css') }} />
+    <link rel="stylesheet" href={{ url_for('static', filename='css/grid.css') }} />
+    <link rel="stylesheet" href={{ url_for('static', filename='css/styles.css') }} />
+    <script src={{ url_for('static', filename='js/jquery.min.js')}}></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+{% from "_formhelpers.html" import render_field %}
+<section class="login-section">
+
+  <form method="post" enctype="multipart/form-data" class="login-form">
+    <h1>LOGIN</h1>
+    <div class="txt">
+      {{ render_field(form.email, class="form-control") }}
+    </div>
+    <div class="txt">
+      {{ render_field(form.password, class="form-control") }}
+    </div>
+    <input type="submit" class="btn-login" value="Login">
+    <div class="bottom-text">
+				Don't have any account? <a href="/signup">Register here</a>
+			</div>
+  </form>
+</section>
+
+</body>
+<script src={{ url_for('static', filename='js/bootstrap.min.js') }}></script>
+<script src={{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}></script>
+<script src={{ url_for('static', filename='js/popper.min.js') }}></script>
+
+</html>
