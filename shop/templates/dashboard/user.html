@@ -1,0 +1,39 @@
+{% extends 'dashboard/layout.html' %}
+{% block body %}
+
+
+
+
+<div class="title-table">LIST USER</div>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in user %}
+        <tr>
+
+
+            <th scope="row">{{loop.index}}</th>
+            <td>{{row.username}}</td>
+            <td>{{row.email}}</td>
+            <td>{{row.role}}</td>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+
+
+{% endblock %}

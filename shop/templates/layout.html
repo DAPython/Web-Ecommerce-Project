@@ -40,12 +40,33 @@
         </ul>
     </div>
 
-    
+
 
 
     {% block body %}
 
     {% endblock %}
+
+    <section class="footer">
+        <table class="table table-borderless footer-inner">
+            <tr>
+                <td><h2>VISIT OUR SHOWROOM</h2></td>
+                <td><a href="#" class="button-white">GET POSITION</a></td>
+            </tr>
+            <tr>
+                <td>140 Le Trong Tan, Tay Thanh, Tan Phu, HCM.</td>
+                <td class="phone"><i class="fas fa-phone"></i> 012323124</td>
+            </tr>
+        </table>
+
+        <ul>
+            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </li>
+        </ul>
+    </section>
 </body>
 <script src={{ url_for('static', filename='js/bootstrap.min.js') }}></script>
 <script src={{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}></script>

@@ -91,7 +91,7 @@
             <tr id="productImage" class="product-image">
                 {% for row in data %}
                 <td>
-                    <img src={{ url_for('static', filename='images/' + row.2) }} id="itemImage" class="center"/>
+                    <img src={{ url_for('static', filename='images/' + row.2) }} id="itemImage" class="center" />
                 </td>
                 {% endfor %}
             </tr>
@@ -109,6 +109,26 @@
     </div>
 </section>
 <!-- END NEW PRODUCT -->
+
+
+
+<!-- CATEGORY SSECTION -->
+
+<section class="category">
+</section>
+
+<!-- END CATEGORY SECTION -->
+
+
+<section class="about-section">
+
+    <div class="detail">
+        <h2>ABOUT OUR COMPANY</h2>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur suscipit minus nulla doloremque fugiat
+            quos nostrum! Eos dolor maiores consequatur.</p>
+        <a href="#" class="button-white">SHOW MORE</a>
+    </div>
+</section>
 
 
 {% endblock %}

@@ -1,28 +1,25 @@
-<!DOCTYPE html>
-<html>
+{% if current_user.is_authenticated %}
+{% include 'dashboard/includes/header.html' %}
+{% include 'dashboard/includes/sidebar.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href={{ url_for('static', filename='css/reset.css') }} />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" />
-    <link rel="stylesheet" href={{ url_for('static', filename='css/animate.css') }} />
-    <link rel="stylesheet" href={{ url_for('static', filename='css/bootstrap.min.css') }} />
-    <link rel="stylesheet" href={{ url_for('static', filename='css/grid.css') }} />
-    <link rel="stylesheet" href={{ url_for('static', filename='css/styles.css') }} />
-    <script src={{ url_for('static', filename='js/jquery.min.js')}}></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<!-- Begin Page Content -->
+<div class="container-fluid">
 
-</head>
+      
+      {% block body %}
 
-<body>
+      {% endblock %}
 
-    {% block body %}
+  </div>
 
-    {% endblock %}
-</body>
-<script src={{ url_for('static', filename='js/bootstrap.min.js') }}></script>
-<script src={{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}></script>
-<script src={{ url_for('static', filename='js/popper.min.js') }}></script>
+  {% include 'dashboard/includes/footer.html' %}
+  {% include 'dashboard/includes/scripts.html' %}
 
-</html>
+{% endif %}
+  
+  
+  
+  
+  
+  
+  
