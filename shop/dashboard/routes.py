@@ -4,13 +4,16 @@ from shop.models import Product, User, Category
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 from wtforms import Form, IntegerField, StringField, BooleanField, TextAreaField, validators
 from shop import app, db, bcrypt
-import sqlite3, os
+import sqlite3
+import os
 
 
 class Categories(Form):
     name_category = StringField('Name', [validators.DataRequired()])
     image_category = StringField('Image', [validators.DataRequired()])
-    description_category = StringField('Description', [validators.DataRequired()])
+    description_category = StringField(
+        'Description', [validators.DataRequired()])
+
 
 
 login_manager = LoginManager()
@@ -22,34 +25,56 @@ login_manager.login_view = 'login'
 @login_required
 def dashboard():
     if current_user.is_authenticated and current_user.role != 'admin':
-       return redirect(url_for('index'))
+        return redirect(url_for('index'))
     return render_template('dashboard/index.html')
 
-@app.route('/addcategory', methods=['GET', 'POST'])
-def addcategory():
-   form = Categories(request.form)
+
+@app.route('/category', methods=['GET', 'POST'])
+def category():
    if request.method == "POST":
-      name = form.name_category.data
-      image = form.image_category.data
-      des = form.description_category.data
-      cat = Categories(name_category=name, image_category=image, description_category=des)
-      db.session.add(cat)
-      db.session.commit()
-      flash(f'The category was added!')
-      return redirect(url_for('dashboard'))
-   return render_template('dashboard/category.html', form=form)
+      name = request.form['name']
+      image = request.form['image']
+      des = request.form['description']
+      with sqlite3.connect('shop/database.db') as con:
+         try:
+            cur = con.cursor()
+            cur.execute('INSERT INTO category(name_category, image_category, description_category) VALUES (?,?,?)', (name, image, des))
+            con.commit()
+         except:
+            con.rollback()
+      con.close()
+   return render_template('dashboard/category.html')
+
+
+@app.route('/addproduct', methods=['GET', 'POST'])
+def addproduct():
+   if request.method == "POST":
+      name = request.form['name']
+      image = request.form['image']
+      price = request.form['price']
+      discount = request.form['discount']
+      des = request.form['description']
+      stock = request.form['stock']
+      with sqlite3.connect('shop/database.db') as con:
+         try:
+            cur = con.cursor()
+            cur.execute('INSERT INTO product(name_product, image_product, price, discount, description_product, stock) VALUES (?,?,?,?,?,?)', (name, image, price, discount, des, stock))
+            con.commit()
+         except:
+            con.rollback()
+      con.close()
+   return render_template('dashboard/addproduct.html')
+
 
 
 @app.route('/user')
 def user():
-   user = User.query.all()
-   return render_template('dashboard/user.html', user=user)
+    user = User.query.all()
+    return render_template('dashboard/user.html', user=user)
+
 
 @app.route('/product')
 def product():
-   title = 'Product | Admin'
-   product = Product.query.all()
-   return render_template('dashboard/product.html', product=product, title=title)
-
-
-
+    title = 'Product | Admin'
+    product = Product.query.all()
+    return render_template('dashboard/product.html', product=product, title=title)

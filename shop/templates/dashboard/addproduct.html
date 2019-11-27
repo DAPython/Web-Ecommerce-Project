@@ -15,11 +15,14 @@
             </ul>
             {% endif %}
             {% endwith %}
-            <form action="addcategory" method="POST" enctype="multipart/form-data">
+            <form action="addproduct" method="POST" enctype="multipart/form-data">
                 <p>Name: <input type="text" name="name" class="form-control"></p>
                 <p>Images: <input type="text" name="image" class="form-control"></p>
+                <p>Price: <input type="text" name="price" class="form-control"></p>
+                <p>Discount: <input type="text" name="discount" class="form-control"></p>
                 <p>Description: <input type="text" name="description" class="form-control"></p>
-                <input type="submit" value="Add Category" class="btn btn-info mt-2">
+                <p>Stock: <input type="text" name="stock" class="form-control"></p>
+                <input type="submit" value="Add Product" class="btn btn-info mt-2">
             </form>
         </div>
         <div class="col-md-3"></div>
