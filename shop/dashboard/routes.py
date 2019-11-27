@@ -65,6 +65,23 @@ def addproduct():
       con.close()
    return render_template('dashboard/addproduct.html')
 
+# @app.route('/editproduct', methods=["GET", "POST"])
+# def editproduct():
+
+
+
+@app.route('/removeproduct')
+def removeproduct():
+   id_product = request.args.get('id_product')
+   with sqlite3.connect('shop/database.db') as conn:
+      try:
+         cur = conn.cursor()
+         cur.execute('DELETE FROM product WHERE id_product = ' + id_product)
+         conn.commit()
+      except:
+         conn.rollback()
+   conn.close()
+   return redirect(url_for('product'))
 
 
 @app.route('/user')
@@ -75,6 +92,5 @@ def user():
 
 @app.route('/product')
 def product():
-    title = 'Product | Admin'
     product = Product.query.all()
-    return render_template('dashboard/product.html', product=product, title=title)
+    return render_template('dashboard/product.html', product=product, title='Product | Admin')

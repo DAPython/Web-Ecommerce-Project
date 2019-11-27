@@ -14,7 +14,9 @@
             <b>Stock:</b> <input type="text" value={{data[6]}} disabled>
             <p class="price">{{data[3]}} VND</p>
             <p class="discount"><b>Discount:</b> {{data[4]}}%</p>
+            <a href="addToCart?id_product={{request.args.get('id_product')}}">
             <button type="button" class="btn btn-default cart"><i class="fas fa-cart-plus"></i> Add To Cart</button>
+            </a>
         </div>
     </div>
     <div class="product-title">DESCRIPTION</div>

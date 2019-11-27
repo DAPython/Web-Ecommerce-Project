@@ -146,6 +146,45 @@ def productdescription():
     conn.close()
     return render_template("product-description.html", data=productData)
 
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+@app.route("/addToCart")
+def addToCart():
+    if current_user.is_authenticated:
+        id_product = int(request.args.get('id_product'))
+        with sqlite3.connect('shop/database.db') as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT id FROM user WHERE email = '" + session['email'] + "'")
+            id_user = cur.fetchone()[0]
+            try:
+                cur.execute("INSERT INTO cart(id, id_product) VALUES (?,?)", (id_user, id_product))
+                conn.commit()
+            except:
+                conn.rollback()
+        conn.close()
+        return redirect(url_for('kart'))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route("/kart")
+def kart():
+    if current_user.is_authenticated:
+        email = session['email']
+        with sqlite3.connect('shop/database.db') as con:
+            cur = con.cursor()
+            cur.execute("SELECT id FROM user WHERE email = '" + email + "'")
+            id_user = cur.fetchone()[0]
+            cur.execute("SELECT product.id_product, product.name_product, product.image_product, product.price FROM product, cart WHERE product.id_product = cart.id_product AND cart.id = " + str(id_user))
+            product = cur.fetchall()
+        totalPrice = 0
+        for row in product:
+            totalPrice += row[3]
+        return render_template("cart.html", product = product, totalPrice=totalPrice)
+    else:
+        return redirect(url_for('login'))
 
 
 

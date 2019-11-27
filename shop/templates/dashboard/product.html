@@ -31,7 +31,7 @@
             <!-- <td>{{row.description_product}}</td> -->
             <td>{{row.stock}}</td>
             <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+            <th scope="col"><a href="/removeproduct?id_product={{row[0]}}">Remove</a></th>
 
         </tr>
         {% endfor %}

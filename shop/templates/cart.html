@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in product %}
+        <tr>
+            <td>{{row[1]}}</td>
+            <td><img style="width: 70px; height: 70px;" src={{url_for('static', filename='images/'+row[2])}}
+                id="image" /></td>
+            <td>{{row[3]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<span id="subtotal">Subtotal</span> : Rs {{totalPrice}}
+<a href="/checkout">Proceed to checkout</a>
+
+{% endblock %}
