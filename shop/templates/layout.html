@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href={{ url_for('static', filename='css/reset.css') }} />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" />
     <link rel="stylesheet" href={{ url_for('static', filename='css/animate.css') }} />
@@ -11,33 +12,76 @@
     <link rel="stylesheet" href={{ url_for('static', filename='css/grid.css') }} />
     <link rel="stylesheet" href={{ url_for('static', filename='css/styles.css') }} />
     <script src={{ url_for('static', filename='js/jquery.min.js')}}></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
 
 </head>
 
 <body>
 
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 7px 7px;
+            margin: 0;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+
     <div class="header">
-        <h2 class="logo">Tech Shop</h2>
+        <h2 class="logo"><a href="/">Tech Shop</a></h2>
         <input type="checkbox" id="chk">
         <label for="chk" class="show-menu-btn">
             <i class="fas fa-ellipsis-h"></i>
         </label>
 
         <ul class="menu">
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
+            <a href="/">Home</a>
             {% if current_user.is_authenticated %}
-            <a href="profile" style="color: blue;">{{current_user.username}}</a>
-            <a href="/logout">Logout</a>
-            {% else %}
-            <a href="/login">Login</a>
-            {% endif %}
-            <label for="chk" class="hide-menu-btn">
-                <i class="fas fa-times"></i>
-            </label>
-        </ul>
+            <div class="dropdown">
+                <a href="profile" style="color: #eb2f06; font-weight: bold;">{{current_user.username}}</a>
+                <div class="dropdown-content">
+                    <a href="/kart">Cart Shopping</a>
+                    <a href="/profile">Profile</a>
+                    <a href="/logout">Logout</a>
+                </div>
+                {% else %}
+                <div class="dropdown-content">
+                <a href="/login">Login</a>
+            </div>
+    </div>
+    {% endif %}
+    <a href="#">About</a>
+
+    <a href="#">Services</a>
+
+    <label for="chk" class="hide-menu-btn">
+        <i class="fas fa-times"></i>
+    </label>
+    </ul>
     </div>
 
 
@@ -50,7 +94,9 @@
     <section class="footer">
         <table class="table table-borderless footer-inner">
             <tr>
-                <td><h2>VISIT OUR SHOWROOM</h2></td>
+                <td>
+                    <h2>VISIT OUR SHOWROOM</h2>
+                </td>
                 <td><a href="#" class="button-white">GET POSITION</a></td>
             </tr>
             <tr>

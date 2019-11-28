@@ -16,6 +16,7 @@ class Categories(Form):
 
 
 
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -29,8 +30,8 @@ def dashboard():
     return render_template('dashboard/index.html')
 
 
-@app.route('/category', methods=['GET', 'POST'])
-def category():
+@app.route('/addcategory', methods=['GET', 'POST'])
+def addcategory():
    if request.method == "POST":
       name = request.form['name']
       image = request.form['image']
@@ -43,7 +44,20 @@ def category():
          except:
             con.rollback()
       con.close()
-   return render_template('dashboard/category.html')
+   return render_template('dashboard/addcategory.html')
+
+@app.route('/removecategory')
+def removecategory():
+   id_category = request.args.get('id_category')
+   with sqlite3.connect('shop/database.db') as conn:
+      try:
+         cur = conn.cursor()
+         cur.execute('DELETE FROM category WHERE id_category = ' +  id_category)
+         conn.commit()
+      except:
+         conn.rollback()
+   conn.close()
+   return redirect(url_for('category'))
 
 
 @app.route('/addproduct', methods=['GET', 'POST'])
@@ -76,7 +90,7 @@ def removeproduct():
    with sqlite3.connect('shop/database.db') as conn:
       try:
          cur = conn.cursor()
-         cur.execute('DELETE FROM product WHERE id_product = ' + id_product)
+         cur.execute('DELETE FROM product WHERE id_product = ' +  id_product)
          conn.commit()
       except:
          conn.rollback()
@@ -84,13 +98,23 @@ def removeproduct():
    return redirect(url_for('product'))
 
 
+
+
 @app.route('/user')
 def user():
     user = User.query.all()
     return render_template('dashboard/user.html', user=user)
+
+@app.route('/category')
+def category():
+    category = Category.query.all()
+    return render_template('dashboard/category.html', category=category)
 
 
 @app.route('/product')
 def product():
     product = Product.query.all()
     return render_template('dashboard/product.html', product=product, title='Product | Admin')
+
+
+

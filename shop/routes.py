@@ -29,7 +29,6 @@ class LoginForm(Form):
 
 
 
-
 class RegistrationForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     email = StringField('Email Address', [validators.Length(min=6, max=35)])
@@ -185,6 +184,24 @@ def kart():
         return render_template("cart.html", product = product, totalPrice=totalPrice)
     else:
         return redirect(url_for('login'))
+
+@app.route("/removeFromCart")
+def removeFromCart():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    email = session['email']
+    id_product = int(request.args.get('id_product'))
+    with sqlite3.connect('shop/database.db') as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM user WHERE email = '" + email + "'")
+        id_user = cur.fetchone()[0]
+        try:
+            cur.execute("DELETE FROM cart WHERE id = " + str(id_user) + " AND id_product = " + str(id_product))
+            conn.commit()
+        except:
+            conn.rollback()
+    conn.close()
+    return redirect(url_for('kart'))
 
 
 
