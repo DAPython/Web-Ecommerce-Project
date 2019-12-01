@@ -61,22 +61,16 @@
         <ul class="menu">
             <a href="/">Home</a>
             {% if current_user.is_authenticated %}
-            <div class="dropdown">
-                <a href="profile" style="color: #eb2f06; font-weight: bold;">{{current_user.username}}</a>
-                <div class="dropdown-content">
-                    <a href="/kart">Cart Shopping</a>
-                    <a href="/profile">Profile</a>
-                    <a href="/logout">Logout</a>
-                </div>
-                {% else %}
-                <div class="dropdown-content">
-                <a href="/login">Login</a>
-            </div>
-    </div>
-    {% endif %}
-    <a href="#">About</a>
+            <a href="profile" style="color: #eb2f06; font-weight: bold;">{{current_user.username}}</a>
+            <a href="/kart">Cart Shopping</a>
 
-    <a href="#">Services</a>
+            <a href="/logout">Logout</a>
+            {% else %}
+            <a href="/login">Login</a>
+            {% endif %}
+            <a href="#">About</a>
+
+            <a href="#">Services</a>
 
     <label for="chk" class="hide-menu-btn">
         <i class="fas fa-times"></i>
