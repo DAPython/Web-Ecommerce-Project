@@ -10992,7 +10992,7 @@
         }
         
         .bg-gradient-primary {
-            background-image: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('/Areas/Admin/img/mountain.jpg');
+            background-image: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('/static/images/mountain.jpg');
             font-weight: bold;
             background-color: none !important;
             background-size: cover !important;
@@ -12347,7 +12347,7 @@
         /******************************CUSTOM CSS***************************/
 
 .bg-gradient-primary {
-    background-image: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url("/Areas/Admin/img/mountain.jpg") !important;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url("/static/images/mountain.jpg") !important;
     background-color: none !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;

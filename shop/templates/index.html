@@ -2,6 +2,8 @@
 
 {% block body %}
 
+
+
 <!-- SECTION CAROUSEL -->
 <section id="Carousel" class="slide">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -63,23 +65,42 @@
 
 
 <!-- SECTION CATEGORY -->
-<!-- <section class="table-responsive">
-    {% for row in myCategory %}
-    <table class="table table-bordered">
-        <tr class="card-group col-3">
-            <div class="card">
-                <img class="card-img-top" src={{ url_for('static', filename='images/' + row.image_category) }}
-                    style="width: 18rem;" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        {{ row.name_category }}
-                    </h5>
-                </div>
-            </div>
-        </tr>
-    </table>
-    {% endfor %}
-</section> -->
+<!-- Popular Categories -->
+
+<div class="popular_categories">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="popular_categories_content">
+						<div class="popular_categories_title">Popular Categories</div>
+						<div class="popular_categories_slider_nav">
+							<div class="popular_categories_prev popular_categories_nav"><i class="fas fa-angle-left ml-auto"></i></div>
+							<div class="popular_categories_next popular_categories_nav"><i class="fas fa-angle-right ml-auto"></i></div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Popular Categories Slider -->
+
+				<div class="col-lg-9">
+					<div class="popular_categories_slider_container">
+						<div class="owl-carousel owl-theme popular_categories_slider">
+
+                            <!-- Popular Categories Item -->
+                            {% for row in myCategory %}
+							<div class="owl-item">
+								<div class="popular_category d-flex flex-column align-items-center justify-content-center">
+									<div class="popular_category_image"><img src={{ url_for('static', filename='images/' + row.2) }} alt=""></div>
+									<div class="popular_category_text">{{row.1}}</div>
+								</div>
+                            </div>
+                            {% endfor %}                    
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <!-- END SECTION CATEGORY -->
 

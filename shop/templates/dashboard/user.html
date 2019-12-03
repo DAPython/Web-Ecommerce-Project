@@ -25,8 +25,8 @@
             <td>{{row.username}}</td>
             <td>{{row.email}}</td>
             <td>{{row.role}}</td>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+            <th scope="col"><a href="/edituser?id={{row.id}}">Edit</a></th>
+            <th scope="col"><a href="/removeuser?id={{row.id}}">Delete</a></th>
 
         </tr>
         {% endfor %}

@@ -1,0 +1,23 @@
+{% extends 'dashboard/layout.html' %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <h1 class="text-center mt-5">Edit Category</h1>
+            <form action="addproduct" method="POST" enctype="multipart/form-data">
+                <p>ID: <input type="text" name="id_product" class="form-control"></p>
+                <p>Name: <input type="text" name="name" class="form-control"></p>
+                <p>Images: <input type="text" name="image" class="form-control"></p>
+                <p>Price: <input type="text" name="price" class="form-control"></p>
+                <p>Discount: <input type="text" name="discount" class="form-control"></p>
+                <p>Description: <input type="text" name="description" class="form-control"></p>
+                <p>Stock: <input type="text" name="stock" class="form-control"></p>
+                <input type="submit" value="Edit Product" class="btn btn-info mt-2">
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{% endblock %}

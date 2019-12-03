@@ -79,11 +79,6 @@ def addproduct():
       con.close()
    return render_template('dashboard/addproduct.html')
 
-# @app.route('/editproduct', methods=["GET", "POST"])
-# def editproduct():
-
-
-
 @app.route('/removeproduct')
 def removeproduct():
    id_product = request.args.get('id_product')
@@ -98,12 +93,47 @@ def removeproduct():
    return redirect(url_for('product'))
 
 
-
+@app.route('/removeuser')
+def removeuser():
+   id = request.args.get('id')
+   with sqlite3.connect('shop/database.db') as conn:
+      try:
+         cur = conn.cursor()
+         cur.execute('DELETE FROM user WHERE id = ' +  id)
+         conn.commit()
+      except:
+         conn.rollback()
+   conn.close()
+   return redirect(url_for('user'))
 
 @app.route('/user')
 def user():
     user = User.query.all()
     return render_template('dashboard/user.html', user=user)
+
+@app.route('/edituser', methods=['POST', 'GET'])
+def edituser():
+   id = request.args.get('id')
+   with sqlite3.connect('shop/database.db') as conn:
+      cur = conn.cursor()
+      user = cur.execute('SELECT * FROM user WHERE id=' + id)
+   return render_template('dashboard/edituser.html', user=user)
+
+@app.route('/updateuser')
+def updateuser():
+   id = request.args.get('id')
+   if request.method == "POST":
+      username= request.form['username']
+      password = request.form['password']
+      role = request.form['role']
+      with sqlite3.connect('shop/database.db') as conn:
+         try:
+            cur.execute('UPDATE user SET username=' + username + ', password=' + password + ', role=' + role + ' WHERE id=' + id)
+            conn.commit()
+         except:
+            conn.rollback()
+      conn.close()
+   return redirect(url_for(user))
 
 @app.route('/category')
 def category():

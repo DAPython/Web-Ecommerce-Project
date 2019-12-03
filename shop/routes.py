@@ -55,13 +55,30 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    myCategory = Category.query.all()
+    CountCart, totalPrice = getLoginDetails()
     with sqlite3.connect('shop/database.db') as conn:
-        cur = conn.cursor()
+        cur = conn.cursor()  
+        cur.execute('SELECT id_category, name_category, image_category FROM category')
+        myCategory = cur.fetchall()
         cur.execute('SELECT id_product, name_product, image_product, price FROM product')
         itemData = cur.fetchall()
     itemData = parse(itemData)
-    return render_template('index.html', myCategory=myCategory, itemData=itemData)
+    return render_template('index.html', myCategory=myCategory, itemData=itemData, CountCart=CountCart, totalPrice=totalPrice)
+
+def getLoginDetails():
+    if current_user.is_authenticated:
+        id = current_user.id
+        with sqlite3.connect('shop/database.db') as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT COUNT(id_product) FROM cart WHERE id =" + str(id))
+            CountCart = cur.fetchone()[0]
+            cur.execute("SELECT product.id_product, product.name_product, product.image_product, product.price FROM product, cart WHERE product.id_product = cart.id_product AND cart.id = " + str(id))
+            product = cur.fetchall()
+        totalPrice = 0
+        for row in product:
+            totalPrice += row[3]
+        conn.close()
+        return (CountCart, totalPrice)
 
 def parse(data):
     ans = []
@@ -140,7 +157,7 @@ def productdescription():
     id_product = request.args.get('id_product')
     with sqlite3.connect('shop/database.db') as conn:
         cur = conn.cursor()
-        cur.execute('SELECT id_product, name_product, image_product, price, discount, description_product, stock FROM product WHERE id_product =' + id_product)
+        cur.execute('SELECT product.id_product, product.name_product, product.image_product, product.price, product.discount, product.description_product, product.stock, category.name_category FROM product, category WHERE product.id_category = category.id_category and id_product =' + id_product)
         productData = cur.fetchone()
     conn.close()
     return render_template("product-description.html", data=productData)
@@ -170,18 +187,20 @@ def addToCart():
 
 @app.route("/kart")
 def kart():
+    
     if current_user.is_authenticated:
-        email = session['email']
+        id = current_user.id
         with sqlite3.connect('shop/database.db') as con:
             cur = con.cursor()
-            cur.execute("SELECT id FROM user WHERE email = '" + email + "'")
-            id_user = cur.fetchone()[0]
-            cur.execute("SELECT product.id_product, product.name_product, product.image_product, product.price FROM product, cart WHERE product.id_product = cart.id_product AND cart.id = " + str(id_user))
+            cur.execute("SELECT product.id_product, product.name_product, product.image_product, product.price FROM product, cart WHERE product.id_product = cart.id_product AND cart.id = " + str(id) + " GROUP BY product.id_product")
             product = cur.fetchall()
+        quantity = 0
+        for row in product:
+            quantity += row[0]
         totalPrice = 0
         for row in product:
             totalPrice += row[3]
-        return render_template("cart.html", product = product, totalPrice=totalPrice)
+        return render_template("cart.html", product = product, totalPrice=totalPrice, quantity=quantity)
     else:
         return redirect(url_for('login'))
 

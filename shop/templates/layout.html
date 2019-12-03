@@ -10,73 +10,286 @@
     <link rel="stylesheet" href={{ url_for('static', filename='css/animate.css') }} />
     <link rel="stylesheet" href={{ url_for('static', filename='css/bootstrap.min.css') }} />
     <link rel="stylesheet" href={{ url_for('static', filename='css/grid.css') }} />
+    <link rel="stylesheet" href={{ url_for('static', filename='css/slick.css') }} />
+    <link rel="stylesheet" href={{ url_for('static', filename='css/owl.theme.default.css') }} />
     <link rel="stylesheet" href={{ url_for('static', filename='css/styles.css') }} />
-    <script src={{ url_for('static', filename='js/jquery.min.js')}}></script>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/owl.carousel.css') }} />
+
+    <link rel="stylesheet" href={{ url_for('static', filename='css/cart_styles.css') }} />
+    <link rel="stylesheet" href={{ url_for('static', filename='css/cart_responsive.css') }} />
+
 
 
 </head>
 
 <body>
-
     <style>
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+        .table td,
+        .table th {
+            border-top: none !important;
+            vertical-align: middle !important;
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 7px 7px;
-            margin: 0;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1
-        }
-
-        /* Show the dropdown menu on hover */
-        .dropdown:hover .dropdown-content {
-            display: block;
         }
     </style>
 
-    <div class="header">
-        <h2 class="logo"><a href="/">Tech Shop</a></h2>
-        <input type="checkbox" id="chk">
-        <label for="chk" class="show-menu-btn">
-            <i class="fas fa-ellipsis-h"></i>
-        </label>
 
-        <ul class="menu">
-            <a href="/">Home</a>
-            {% if current_user.is_authenticated %}
-            <a href="profile" style="color: #eb2f06; font-weight: bold;">{{current_user.username}}</a>
-            <a href="/kart">Cart Shopping</a>
 
-            <a href="/logout">Logout</a>
-            {% else %}
-            <a href="/login">Login</a>
-            {% endif %}
-            <a href="#">About</a>
+    <!-- Header -->
 
-            <a href="#">Services</a>
+    <header class="header">
 
-    <label for="chk" class="hide-menu-btn">
-        <i class="fas fa-times"></i>
-    </label>
-    </ul>
-    </div>
+        <!-- Header Main -->
+
+        <div class="header_main">
+            <div class="container">
+                <div class="row">
+
+                    <!-- Logo -->
+                    <div class="col-lg-2 col-sm-3 col-3 order-1">
+                        <div class="logo_container">
+                            <div class="logo"><a href="/">TechShop</a></div>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
+                        <div class="header_search">
+                            <div class="header_search_content">
+                                <div class="header_search_form_container">
+                                    <form action="#" class="header_search_form clearfix">
+                                        <input type="search" required="required" class="header_search_input"
+                                            placeholder="Search for products...">
+                                        <div class="custom_dropdown">
+                                            <div class="custom_dropdown_list">
+                                                <span class="custom_dropdown_placeholder clc">All Categories</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                                <ul class="custom_list clc">
+                                                    {% for row in myCategory %}
+                                                    <li><a class="clc" href="#">{{row[1]}}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="header_search_button trans_300" value="Submit"><img
+                                                src="static/images/search.png" alt=""></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wishlist -->
+                    <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
+                        <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
+                            <div class="wishlist d-flex flex-row align-items-center justify-content-end">
+                                <div class="wishlist_icon"><img src="static/images/heart.png" alt=""></div>
+                                <div class="wishlist_content">
+                                    <div class="wishlist_text"><a href="#">Wishlist</a></div>
+                                    <div class="wishlist_count">115</div>
+                                </div>
+                            </div>
+
+                            <!-- Cart -->
+                            <div class="cart">
+                                <div class="cart_container d-flex flex-row align-items-center justify-content-end">
+                                    <div class="cart_icon">
+                                        <img src="static/images/cart.png" alt="">
+                                        <div class="cart_count"><span>{{CountCart}}</span></div>
+                                    </div>
+                                    <div class="cart_content">
+                                        <div class="cart_text"><a href="#">Cart</a></div>
+                                        <div class="cart_price">${{totalPrice}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+
+        <nav class="main_nav">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+
+                        <div class="main_nav_content d-flex flex-row">
+
+                            <!-- Categories Menu -->
+
+                            <div class="cat_menu_container">
+                                <div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
+                                    <div class="cat_burger"><span></span><span></span><span></span></div>
+                                    <div class="cat_menu_text">categories</div>
+                                </div>
+
+                                <ul class="cat_menu">
+                                    {% for row in myCategory %}
+                                    <li><a href="#">{{row[1]}} <i class="fas fa-chevron-right ml-auto"></i></a></li>
+                                    {% endfor %}
+                                    <!-- <li class="hassubs">
+										<a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
+										<ul>
+											<li class="hassubs">
+												<a href="#">Menu Item<i class="fas fa-chevron-right"></i></a>
+												<ul>
+													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+												</ul>
+											</li>
+											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+										</ul>
+                                    </li> -->
+                                </ul>
+                            </div>
+
+                            <!-- Main Nav Menu -->
+
+                            <div class="main_nav_menu ml-auto">
+                                <ul class="standard_dropdown main_nav_dropdown">
+                                    <li><a href="/">Home<i class="fas fa-chevron-down"></i></a></li>
+                                    {% if current_user.is_authenticated %}
+                                    <li class="hassubs" style="text-transform: uppercase">
+
+                                        <a href="#"
+                                            style="text-transform: uppercase; font-weight: bold; color:navy;">{{current_user.username}}<i
+                                                class="fas fa-chevron-down"></i></a>
+                                        <ul>
+                                            <li><a href="profile">Profile<i class="fas fa-chevron-down"></i></a></li>
+                                            <li><a href="kart">Cart<i class="fas fa-chevron-down"></i></a></li>
+                                            <li><a href="logout">Logout<i class="fas fa-chevron-down"></i></a></li>
+                                        </ul>
+                                    </li>
+                                    {% else %}
+                                    <li><a href="login">Login<i class="fas fa-chevron-down"></i></a></li>
+                                    {% endif %}
+                                    <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
+                                    <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Menu Trigger -->
+
+                            <div class="menu_trigger_container ml-auto">
+                                <div class="menu_trigger d-flex flex-row align-items-center justify-content-end">
+                                    <div class="menu_burger">
+                                        <div class="menu_trigger_text">menu</div>
+                                        <div class="cat_burger menu_burger_inner">
+                                            <span></span><span></span><span></span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Menu -->
+
+        <div class="page_menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+
+                        <div class="page_menu_content">
+
+                            <div class="page_menu_search">
+                                <form action="#">
+                                    <input type="search" required="required" class="page_menu_search_input"
+                                        placeholder="Search for products...">
+                                </form>
+                            </div>
+                            <ul class="page_menu_nav">
+                                <li class="page_menu_item has-children">
+                                    <a href="#">Language<i class="fa fa-angle-down"></i></a>
+                                    <ul class="page_menu_selection">
+                                        <li><a href="#">English<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Italian<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Spanish<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Japanese<i class="fa fa-angle-down"></i></a></li>
+                                    </ul>
+                                </li>
+                                <li class="page_menu_item has-children">
+                                    <a href="#">Currency<i class="fa fa-angle-down"></i></a>
+                                    <ul class="page_menu_selection">
+                                        <li><a href="#">US Dollar<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">EUR Euro<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">GBP British Pound<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">JPY Japanese Yen<i class="fa fa-angle-down"></i></a></li>
+                                    </ul>
+                                </li>
+                                <li class="page_menu_item">
+                                    <a href="index.html">Home<i class="fa fa-angle-down"></i></a>
+                                </li>
+                                <li class="page_menu_item has-children">
+                                    <a href="#">Super Deals<i class="fa fa-angle-down"></i></a>
+                                    <ul class="page_menu_selection">
+                                        <li><a href="#">Super Deals<i class="fa fa-angle-down"></i></a></li>
+                                        <li class="page_menu_item has-children">
+                                            <a href="#">Menu Item<i class="fa fa-angle-down"></i></a>
+                                            <ul class="page_menu_selection">
+                                                <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                                <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                                <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                                <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                    </ul>
+                                </li>
+                                <li class="page_menu_item has-children">
+                                    <a href="#">Featured Brands<i class="fa fa-angle-down"></i></a>
+                                    <ul class="page_menu_selection">
+                                        <li><a href="#">Featured Brands<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                    </ul>
+                                </li>
+                                <li class="page_menu_item has-children">
+                                    <a href="#">Trending Styles<i class="fa fa-angle-down"></i></a>
+                                    <ul class="page_menu_selection">
+                                        <li><a href="#">Trending Styles<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                        <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                    </ul>
+                                </li>
+                                <li class="page_menu_item"><a href="blog.html">blog<i class="fa fa-angle-down"></i></a>
+                                </li>
+                                <li class="page_menu_item"><a href="contact.html">contact<i
+                                            class="fa fa-angle-down"></i></a></li>
+                            </ul>
+
+                            <div class="menu_contact">
+                                <div class="menu_contact_item">
+                                    <div class="menu_contact_icon"><img src="static/images/phone_white.png" alt="">
+                                    </div>+38
+                                    068 005 3570
+                                </div>
+                                <div class="menu_contact_item">
+                                    <div class="menu_contact_icon"><img src="static/images/mail_white.png" alt=""></div>
+                                    <a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
 
 
 
@@ -110,6 +323,21 @@
 </body>
 <script src={{ url_for('static', filename='js/bootstrap.min.js') }}></script>
 <script src={{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}></script>
+<script src={{ url_for('static', filename='js/jquery-3.3.1.min.js') }}></script>
 <script src={{ url_for('static', filename='js/popper.min.js') }}></script>
+<script src={{ url_for('static', filename='js/jquery.min.js')}}></script>
+<script src={{ url_for('static', filename='js/slick.js')}}></script>
+<script src={{ url_for('static', filename='js/easing.js') }}></script>
+<script src={{ url_for('static', filename='js/owl.carousel.js') }}></script>
+<script src={{ url_for('static', filename='js/ScrollMagic.min.js') }}></script>
+<script src={{ url_for('static', filename='js/custom.js') }}></script>
+<script src={{ url_for('static', filename='js/TimelineMax.min.js') }}></script>
+<script src={{ url_for('static', filename='js/TweenMax.min.js') }}></script>
+<script src={{ url_for('static', filename='js/ScrollToPlugin.min.js') }}></script>
+<script src={{ url_for('static', filename='js/cart_custom.js') }}></script>
+<script src={{ url_for('static', filename='js/animation.gsap.min.js') }}></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
 
 </html>
