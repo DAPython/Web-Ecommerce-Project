@@ -118,10 +118,12 @@
     }
 </style>
 
+<link rel="stylesheet" href={{ url_for('static', filename='css/main.css') }} />
+<!-- 
 <div class="wrapper">
     <div class="left">
         <img src="/static/images/avatar.png" alt="user" width="100">
-        <h4>{{current_user.username}}</h4>
+        <input type="text" class="col-md-7 form-control text-center center" name="email" placeholder="{{user[1]}}"></p>
         <p>Plantium Member</p>
     </div>
     <div class="right">
@@ -130,11 +132,11 @@
             <div class="info_data">
                 <div class="data">
                     <h4>Email</h4>
-                    <p>{{current_user.email}}</p>
+                    <input type="email" class="form-control" name="email" placeholder="{{user[2]}}" disabled></p>
                 </div>
                 <div class="data">
                     <h4>Phone</h4>
-                    <p>{{user[6]}}</p>
+                    <input type="number" class="form-control" name="phone" placeholder="{{user[6]}}"></p>
                 </div>
             </div>
         </div>
@@ -144,7 +146,7 @@
             <div class="projects_data">
                 <div class="data">
                     <h4>Address</h4>
-                    <p>{{user[5]}}</p>
+                    <input type="text" class="form-control" name="address" placeholder="{{user[5]}}"></p>
                 </div>
                 <div class="data">
                     <h4>Most Viewed</h4>
@@ -155,14 +157,13 @@
 
         <div class="social_media">
             <ul>
-                <li><a href="editprofile"><i class="fas fa-edit"></i></a></li>
-                <li><a href="kart"><i class="fas fa-shopping-cart"></i></a></li>
-                <li><a href="logout"><i class="fas fa-sign-out-alt"></i></a></li>
+                <li><a href="updateprofile"><i class="fas fa-save"></i></a></li>
+                <li><a href="profile"><i class="fas fa-window-close"></i></a></li>
+                <li><a href="profile"><i class="fas fa-arrow-circle-left"></i></a></li>
             </ul>
         </div>
     </div>
-</div>
-
+</div> -->
 
 <div class="container-contact100">
     <div class="wrap-contact100">
@@ -170,53 +171,38 @@
             <i class="zmdi zmdi-close"></i>
         </button>
 
-        <div class="contact100-form-title" style="background-image: url(images/bg-02.jpg);">
-            <span>Contact Us</span>
+        <div class="contact100-form-title" style="background-image: url(static/images/bg-02.jpg);">
+            <span>EDIT PROFILE</span>
         </div>
 
-        <form class="contact100-form validate-form">
+        <form action="updateprofile" class="contact100-form validate-form">
             <div class="wrap-input100 validate-input">
-                <input id="name" class="input100" type="text" name="name" placeholder="Full name">
-                <span class="focus-input100"></span>
-                <label class="label-input100" for="name">
-                    <span class="lnr lnr-user m-b-2"></span>
-                </label>
+                <input id="name" class="form-control" type="text" name="username" placeholder="{{user[1]}}">
             </div>
 
 
             <div class="wrap-input100 validate-input">
-                <input id="email" class="input100" type="text" name="email" placeholder="Eg. example@email.com">
-                <span class="focus-input100"></span>
-                <label class="label-input100" for="email">
-                    <span class="lnr lnr-envelope m-b-5"></span>
-                </label>
+                <input id="email" class="form-control" type="text" name="email" placeholder="{{user[2]}}" disabled>
             </div>
 
 
             <div class="wrap-input100 validate-input">
-                <input id="phone" class="input100" type="text" name="phone" placeholder="Eg. +1 800 000000">
-                <span class="focus-input100"></span>
-                <label class="label-input100" for="phone">
-                    <span class="lnr lnr-smartphone m-b-2"></span>
-                </label>
+                <input id="phone" class="form-control" type="text" name="phone" placeholder="{{user[5]}}">
             </div>
 
 
             <div class="wrap-input100 validate-input">
-                <textarea id="message" class="input100" name="message" placeholder="Your comments..."></textarea>
-                <span class="focus-input100"></span>
-                <label class="label-input100 rs1" for="message">
-                    <span class="lnr lnr-bubble"></span>
-                </label>
+                <input id="adress" class="form-control" type="text" name="address" placeholder="{{user[6]}}">
             </div>
 
             <div class="container-contact100-form-btn">
                 <button class="contact100-form-btn">
-                    Send Now
+                    Update
                 </button>
             </div>
         </form>
     </div>
 </div>
+
 
 {% endblock %}

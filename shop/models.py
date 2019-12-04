@@ -35,6 +35,7 @@ class Category(db.Model):
         return '<Category %r>' % self.name_category
 
 class User(UserMixin, db.Model):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -42,7 +43,9 @@ class User(UserMixin, db.Model):
     role = db.Column(db.String(120), unique=False,
                      nullable=False, default='customer')
 
+
     def __repr__(self):
         return '<User %r>' % self.username
+
 
 db.create_all()

@@ -14,7 +14,6 @@
     <link rel="stylesheet" href={{ url_for('static', filename='css/owl.theme.default.css') }} />
     <link rel="stylesheet" href={{ url_for('static', filename='css/styles.css') }} />
     <link rel="stylesheet" href={{ url_for('static', filename='css/owl.carousel.css') }} />
-
     <link rel="stylesheet" href={{ url_for('static', filename='css/cart_styles.css') }} />
     <link rel="stylesheet" href={{ url_for('static', filename='css/cart_responsive.css') }} />
 
@@ -56,8 +55,8 @@
                         <div class="header_search">
                             <div class="header_search_content">
                                 <div class="header_search_form_container">
-                                    <form action="#" class="header_search_form clearfix">
-                                        <input type="search" required="required" class="header_search_input"
+                                    <form action="search" method="GET" class="header_search_form clearfix">
+                                        <input type="search" required="required" name="query" id="query" class="header_search_input"
                                             placeholder="Search for products...">
                                         <div class="custom_dropdown">
                                             <div class="custom_dropdown_list">
@@ -65,7 +64,7 @@
                                                 <i class="fas fa-chevron-down"></i>
                                                 <ul class="custom_list clc">
                                                     {% for row in myCategory %}
-                                                    <li><a class="clc" href="#">{{row[1]}}</a></li>
+                                                    <li><a class="clc" href=displaycategory?id_category={{row[0]}}>{{row[1]}}</a></li>
                                                     {% endfor %}
                                                 </ul>
                                             </div>
@@ -81,24 +80,32 @@
                     <!-- Wishlist -->
                     <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
                         <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
-                            <div class="wishlist d-flex flex-row align-items-center justify-content-end">
+                            <!-- <div class="wishlist d-flex flex-row align-items-center justify-content-end">
                                 <div class="wishlist_icon"><img src="static/images/heart.png" alt=""></div>
                                 <div class="wishlist_content">
                                     <div class="wishlist_text"><a href="#">Wishlist</a></div>
                                     <div class="wishlist_count">115</div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Cart -->
                             <div class="cart">
                                 <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                     <div class="cart_icon">
                                         <img src="static/images/cart.png" alt="">
+                                        {% if current_user.is_authenticated %}
                                         <div class="cart_count"><span>{{CountCart}}</span></div>
+                                        {% else %}
+                                        <div class="cart_count"><span>0</span></div>
+                                        {% endif %}
                                     </div>
                                     <div class="cart_content">
-                                        <div class="cart_text"><a href="#">Cart</a></div>
+                                        <div class="cart_text"><a href="kart">Cart</a></div>
+                                        {% if current_user.is_authenticated %}
                                         <div class="cart_price">${{totalPrice}}</div>
+                                        {% else %}
+                                        <div class="cart_price">0</div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -127,25 +134,8 @@
 
                                 <ul class="cat_menu">
                                     {% for row in myCategory %}
-                                    <li><a href="#">{{row[1]}} <i class="fas fa-chevron-right ml-auto"></i></a></li>
+                                    <li><a href=displaycategory?id_category={{row[0]}}>{{row[1]}} <i class="fas fa-chevron-right ml-auto"></i></a></li>
                                     {% endfor %}
-                                    <!-- <li class="hassubs">
-										<a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
-										<ul>
-											<li class="hassubs">
-												<a href="#">Menu Item<i class="fas fa-chevron-right"></i></a>
-												<ul>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-												</ul>
-											</li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-										</ul>
-                                    </li> -->
                                 </ul>
                             </div>
 
@@ -158,7 +148,7 @@
                                     <li class="hassubs" style="text-transform: uppercase">
 
                                         <a href="#"
-                                            style="text-transform: uppercase; font-weight: bold; color:navy;">{{current_user.username}}<i
+                                            style="text-transform: uppercase; font-weight: bold; color:#fff200;">{{current_user.username}}<i
                                                 class="fas fa-chevron-down"></i></a>
                                         <ul>
                                             <li><a href="profile">Profile<i class="fas fa-chevron-down"></i></a></li>
@@ -335,7 +325,10 @@
 <script src={{ url_for('static', filename='js/TweenMax.min.js') }}></script>
 <script src={{ url_for('static', filename='js/ScrollToPlugin.min.js') }}></script>
 <script src={{ url_for('static', filename='js/cart_custom.js') }}></script>
+<script src={{ url_for('static', filename='js/isotope.pkgd.min.js') }}></script>
+<script src={{ url_for('static', filename='js/jquery-ui.js') }}></script>
 <script src={{ url_for('static', filename='js/animation.gsap.min.js') }}></script>
+<script src={{ url_for('static', filename='js/parallax.min.js') }}></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 

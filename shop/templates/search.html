@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<section class="product">
+        <h2 class="title">PRODUCT</h2>
+        <div class="table-responsive">
+            {% for row in product %}
+            <table class="table table-bordered product-card">
+                <tr id="productImage" class="product-image">
+                    <td>
+                        <img src={{ url_for('static', filename='images/' + row.2) }} id="itemImage" class="center" />
+                    </td>
+                </tr>
+                <tr id="productName" class="product-detail">
+                    <td>
+                        <a href="/productdescription?id_product={{row[0]}}">{{row[1]}}</a>
+                        <br>
+                        <p>{{row[3]}} VND</p>
+                    </td>
+                </tr>
+            </table>
+            {% endfor %}
+        </div>
+        <div class="btn-view"><a href="#">View Store</a></div>
+    </section>
+
+{% endblock %}

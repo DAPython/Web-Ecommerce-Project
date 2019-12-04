@@ -2,7 +2,45 @@
 
 {% block body %}
 
+<style>
+    .image-banner {
+        position: absolute;
+        right: 50px;
+        z-index: 0;
+    }
 
+    .banner_content {
+        position: absolute;
+        top: 100px;
+    }
+
+    .banner_text {
+        font-weight: 500;
+        line-height: 1.166;
+        color: #7599b2;
+        text-transform: uppercase;
+        letter-spacing: 0.038em;
+    }
+
+    .banner_price {
+        font-size: 30px;
+        color: #df3b3b;
+    }
+
+    .banner_price span {
+        display: inline-block;
+        position: relative;
+        color: #7e8285;
+        margin-right: 14px;
+    }
+
+    .banner_product_name {
+        font-size: 18px;
+        font-weight: 400;
+        color: #000000;
+        margin-top: 8px;
+    }
+</style>
 
 <!-- SECTION CAROUSEL -->
 <section id="Carousel" class="slide">
@@ -10,19 +48,24 @@
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
-        <div class="carousel-inner" role="listbox" style=" width:100%; height: 500px !important;">
+        <div class="carousel-inner" role="listbox"
+            style=" width:100%; height: 500px !important; background-image:url(static/images/banner_background.jpg)">
             <div class="carousel-item active">
-                <img src={{ url_for('static', filename='images/bg-smartphone.jpg') }} class="d-block w-100 h-100"
+                <img src={{ url_for('static', filename='images/banner_product.png') }} class="d-block image-banner"
                     alt="1">
+                <div class="col-lg-5 offset-lg-2">
+                    <div class="banner_content">
+                        <h1 class="banner_text">new era of smartphones</h1>
+                        <div class="banner_price"><span>$530</span>$460</div>
+                        <div class="banner_product_name">Apple Iphone 6s</div>
+                        <div class="button banner_button"><a href="#">Shop Now</a></div>
+                    </div>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src={{ url_for('static', filename='images/bg-mp3.jpg') }} class="d-block w-100 h-100" alt="2">
-            </div>
-            <div class="carousel-item">
-                <img src={{ url_for('static', filename='images/bg-headphone.jpg') }} class="d-block w-100 h-100"
-                    alt="3">
+                <img src={{ url_for('static', filename='images/banner_2_product.png') }} class="d-block image-banner"
+                    alt="2">
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -68,39 +111,42 @@
 <!-- Popular Categories -->
 
 <div class="popular_categories">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="popular_categories_content">
-						<div class="popular_categories_title">Popular Categories</div>
-						<div class="popular_categories_slider_nav">
-							<div class="popular_categories_prev popular_categories_nav"><i class="fas fa-angle-left ml-auto"></i></div>
-							<div class="popular_categories_next popular_categories_nav"><i class="fas fa-angle-right ml-auto"></i></div>
-						</div>
-					</div>
-				</div>
-				
-				<!-- Popular Categories Slider -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="popular_categories_content">
+                    <div class="popular_categories_title">Popular Categories</div>
+                    <div class="popular_categories_slider_nav">
+                        <div class="popular_categories_prev popular_categories_nav"><i
+                                class="fas fa-angle-left ml-auto"></i></div>
+                        <div class="popular_categories_next popular_categories_nav"><i
+                                class="fas fa-angle-right ml-auto"></i></div>
+                    </div>
+                </div>
+            </div>
 
-				<div class="col-lg-9">
-					<div class="popular_categories_slider_container">
-						<div class="owl-carousel owl-theme popular_categories_slider">
+            <!-- Popular Categories Slider -->
 
-                            <!-- Popular Categories Item -->
-                            {% for row in myCategory %}
-							<div class="owl-item">
-								<div class="popular_category d-flex flex-column align-items-center justify-content-center">
-									<div class="popular_category_image"><img src={{ url_for('static', filename='images/' + row.2) }} alt=""></div>
-									<div class="popular_category_text">{{row.1}}</div>
-								</div>
+            <div class="col-lg-9">
+                <div class="popular_categories_slider_container">
+                    <div class="owl-carousel owl-theme popular_categories_slider">
+
+                        <!-- Popular Categories Item -->
+                        {% for row in myCategory %}
+                        <div class="owl-item">
+                            <div class="popular_category d-flex flex-column align-items-center justify-content-center">
+                                <div class="popular_category_image"><img
+                                        src={{ url_for('static', filename='images/' + row.2) }} alt=""></div>
+                                <div class="popular_category_text">{{row.1}}</div>
                             </div>
-                            {% endfor %}                    
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- END SECTION CATEGORY -->
 
@@ -113,7 +159,7 @@
             <tr id="productImage" class="product-image">
                 {% for row in data %}
                 <td>
-                    <img src={{ url_for('static', filename='images/' + row.2) }} id="itemImage" class="center" />
+                    <img src={{ url_for('static', filename='images/' + row.2) }} id="itemImage" class="center" style="width: 70%;" />
                 </td>
                 {% endfor %}
             </tr>
@@ -129,31 +175,15 @@
         </table>
         {% endfor %}
     </div>
-    <div class="btn-view"><a href="#">View Store</a></div>
 </section>
 <!-- END NEW PRODUCT -->
 
-
-<!-- SECTION NEW PRODUCT -->
-
-<!-- CATEGORY SSECTION -->
-
-<!-- <section class="category">
-    <h2 class="title">CATEGORY</h2>
-    <div class="card-1">
-        <div class="title">Laptop</div>
-        <div class="detail">Lorem ipsum dolor sit amet.</div>
-        <a href="#" class="btn-light">View</a>
-    </div>
-</section> -->
-
-<!-- END CATEGORY SECTION -->
 
 
 <!--Gallery produc section-->
 <section id="gallery-product">
     <div class="flex-container">
-        <a href="#" class="hover flex">
+        <a href=displaycategory?id_category=2 class="hover flex">
             <img src="/static/images/laptop-bg.jpg" alt="">
             <div class="pro-detail">
                 <div class="detail">
@@ -162,7 +192,7 @@
                 </div>
             </div>
         </a>
-        <a href="#" class="hover flex">
+        <a href=displaycategory?id_category=4 class="hover flex">
             <img src="/static/images/headphone-bg.jpg" alt="">
             <div class="pro-detail">
                 <div class="detail">
@@ -171,7 +201,7 @@
                 </div>
             </div>
         </a>
-        <a href="#" class="hover flex">
+        <a href=displaycategory?id_category=1 class="hover flex">
             <img src="/static/images/phone-bg.jpg" alt="">
             <div class="pro-detail">
                 <div class="detail">
@@ -180,7 +210,7 @@
                 </div>
             </div>
         </a>
-        <a href="#" class="hover flex">
+        <a href=displaycategory?id_category=5 class="hover flex">
             <img src="/static/images/speaker-bg.jpg" alt="">
             <div class="pro-detail">
                 <div class="detail">
@@ -196,7 +226,7 @@
 </section>
 <!--End Gallery product section-->
 
-
+<!--About Section-->
 
 <section class="about-section">
 
@@ -208,25 +238,27 @@
     </div>
 </section>
 
+<!--End About Section-->
+
 <div class="cash">
-        <div class="row">
-            <div class="col span-1-of-3">
-                <i class="fas fa-shipping-fast"></i>
-                <h5>FREE SHIP</h5>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-            <div class="col span-1-of-3">
-                <i class="fas fa-money-check-alt"></i>
-                <h5>CASH ON DELIVERY</h5>
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-            <div class="col span-1-of-3">
-                <i class="fas fa-gift"></i>
-                <h5>BIG SALE</h5>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
+    <div class="row">
+        <div class="col span-1-of-3">
+            <i class="fas fa-shipping-fast"></i>
+            <h5>FREE SHIP</h5>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+        </div>
+        <div class="col span-1-of-3">
+            <i class="fas fa-money-check-alt"></i>
+            <h5>CASH ON DELIVERY</h5>
+            <p>Lorem ipsum dolor sit amet.</p>
+        </div>
+        <div class="col span-1-of-3">
+            <i class="fas fa-gift"></i>
+            <h5>BIG SALE</h5>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
         </div>
     </div>
+</div>
 
 
 {% endblock %}
