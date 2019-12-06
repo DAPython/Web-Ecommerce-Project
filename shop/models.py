@@ -2,12 +2,12 @@ from flask_login import UserMixin
 from shop import db
 
 
-class AdminUser(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+# class AdminUser(UserMixin, db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String(80), unique=True, nullable=False)
 
-    def __repr__(self):
-        return '<AdminUser %r>' % self.username
+#     def __repr__(self):
+#         return '<AdminUser %r>' % self.username
 
 
 
@@ -21,6 +21,8 @@ class Product(db.Model):
                      nullable=False)
     stock = db.Column(db.Integer, unique=False,
                      nullable=False)
+    id_image = db.Column(db.Integer, unique=False, nullable=False)
+    id_category = db.Column(db.Integer, unique=False, nullable=False)
 
     def __repr__(self):
         return '<Product %r>' % self.name_product
@@ -42,6 +44,8 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(120), unique=False, nullable=False)
     role = db.Column(db.String(120), unique=False,
                      nullable=False, default='customer')
+    phone = db.Column(db.String(120), unique=False, nullable=False)
+    address = db.Column(db.String(120), unique=False, nullable=False)
 
 
     def __repr__(self):

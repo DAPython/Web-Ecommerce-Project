@@ -1,4 +1,5 @@
 from flask import render_template, session, request, redirect, url_for, flash
+from flask import *
 import sqlite3, os
 from flask_wtf import FlaskForm
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
@@ -7,7 +8,7 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from .dashboard import routes
-from .models import User, AdminUser, Product, Category
+from .models import User, Product, Category
 from shop import app, db, bcrypt
 
 login_manager = LoginManager()
@@ -44,7 +45,7 @@ db.create_all()
 
 admin = Admin(app)
 admin.add_view(MyModelView(User, db.session))
-admin.add_view(MyModelView(AdminUser, db.session))
+# admin.add_view(MyModelView(AdminUser, db.session))
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -258,15 +259,38 @@ def kart():
             cur = con.cursor()
             cur.execute("SELECT product.id_product, product.name_product, product.image_product, product.price FROM product, cart WHERE product.id_product = cart.id_product AND cart.id = " + str(id) + " GROUP BY product.id_product")
             product = cur.fetchall()
+            cur.execute("Select count(id_product) from cart Group By id_product")
+            quantity = cur.fetchone()[0]
         totalPrice = 0
         for row in product:
             totalPrice += row[3]
-        return render_template("cart.html", product = product, totalPrice=totalPrice, CountCart=CountCart)
+        return render_template("cart.html", product = product, totalPrice=totalPrice, CountCart=CountCart, quantity=quantity)
     else:
         return redirect(url_for('login'))
 
-@app.route("/checkout", methods=['GET','POST'])
-def checkout():
+# @app.route("/checkout", methods=['GET','POST'])
+# def checkout():
+#     if 'email' not in session:
+#         return redirect(url_for('login'))
+#     email = session['email']
+#     with sqlite3.connect('shop/database.db') as conn:
+#         cur = conn.cursor()
+#         cur.execute("SELECT id FROM user WHERE email = '" + email + "'")
+#         id_user = cur.fetchone()[0]
+#         cur.execute("SELECT product.id_product, product.name_product, product.price, product.image_product FROM product, cart WHERE product.id_product = cart.id_product AND cart.id = " + str(id_user))
+#         products = cur.fetchall()
+#     totalPrice = 0
+#     for row in products:
+#         totalPrice += row[2]
+#         print(row)
+#         cur.execute("INSERT INTO order(id, id_product) VALUES (?,?)", (id_user, row[0]))
+#     cur.execute("DELETE FROM cart WHERE id=" + str(id_user))
+#     conn.commit()
+#     return render_template('order.html', products = products, totalPrice=totalPrice)
+
+
+@app.route("/checkout")
+def payment():
     if 'email' not in session:
         return redirect(url_for('login'))
     email = session['email']
@@ -274,17 +298,36 @@ def checkout():
         cur = conn.cursor()
         cur.execute("SELECT id FROM user WHERE email = '" + email + "'")
         id_user = cur.fetchone()[0]
-        cur.execute("SELECT product.id_product, product.name_product, product.price, product.image_product FROM product, cart WHERE product.id_product = cart.id_product AND cart.id = " + str(id_user))
+        cur.execute("SELECT product.id_product, product.name_product, product.image_product, product.price FROM product, cart WHERE product.id_product = cart.id_product AND cart.id = " + str(id_user))
         products = cur.fetchall()
     totalPrice = 0
     for row in products:
-        totalPrice += row[2]
+        totalPrice += row[3]
         print(row)
-        cur.execute("INSERT INTO order(id, id_product) VALUES (?,?)", (id_user, row[0]))
-    cur.execute("DELETE FROM cart WHERE id=" + str(id_user))
+        cur.execute("INSERT INTO order1(id, id_product) VALUES (?,?)", (id_user, row[0]))
+    cur.execute("DELETE FROM cart WHERE id = " + str(id_user))
     conn.commit()
-    return render_template('order.html', products = products, totalPrice=totalPrice)
+    return render_template("order.html", products = products, totalPrice=totalPrice)
 
+@app.route("/order")
+def order():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    email = session['email']
+    with sqlite3.connect('shop/database.db') as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM user WHERE email = '" + email + "'")
+        id_user = cur.fetchone()[0]
+        cur.execute("SELECT product.id_product, product.name_product, product.image_product, product.price FROM product, order1 WHERE product.id_product = order1.id_product AND order1.id = " + str(id_user))
+        products = cur.fetchall()
+
+    totalPrice = 0
+    quantity = 0
+    for row in products:
+        totalPrice += row[3]
+        if (row[0] != 0):
+            quantity += 1
+    return render_template("order1.html", products = products, totalPrice=totalPrice, quantity=quantity)
 
 @app.route("/removeFromCart")
 def removeFromCart():

@@ -25,7 +25,17 @@ login_manager.login_view = 'login'
 def dashboard():
    if current_user.is_authenticated and current_user.role != 'admin':
       return redirect(url_for('index'))
-   return render_template('dashboard/index.html')
+   with sqlite3.connect('shop/database.db') as conn:
+      cur = conn.cursor()
+      cur.execute('Select count(id) from user')
+      user = cur.fetchone()[0]
+      cur.execute('Select count(id_product) from product')
+      product = cur.fetchone()[0]
+      cur.execute('Select count(id_category) from category')
+      category = cur.fetchone()[0]
+      
+   conn.close()
+   return render_template('dashboard/index.html', user=user, product=product, category=category)
 
 
 @app.route('/addcategory', methods=['GET', 'POST'])
